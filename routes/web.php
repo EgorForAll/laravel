@@ -21,7 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::get('/admin', 'App\Http\Controllers\Admin\Post\AdminController@index');
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin', 'App\Http\Controllers\Admin\Post\AdminController@index')->name('admin.index');
+});
+
 
 Route::group(['prefix' => 'posts', 'namespace' => 'App\Http\Controllers\Post'], function () {
     Route::get('/', 'IndexController')->name('post.index');
